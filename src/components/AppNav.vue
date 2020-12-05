@@ -58,19 +58,6 @@
             </v-list-item-title>
           </v-list-item>
         </v-list-group>
-        <v-list-item @click="toggleTheme">
-          <v-list-item-icon>
-            <v-icon v-if="this.$vuetify.theme.dark"
-              >mdi-toggle-switch-off</v-icon
-            >
-            <v-icon v-else>mdi-toggle-switch-outline</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="text-uppercase">
-              Theme
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-container class="mx-auto py-0">
@@ -128,15 +115,15 @@ export default {
       // folderLoaded means does folder need to be loaded ?
       links: [
         {
-          label: 'The painter',
+          label: 'Le peintre',
           routeName: 'Home',
-          icon: 'mdi-home',
+          icon: 'mdi-brush',
           loggedIn: false
         },
         {
-          label: 'Gallery',
+          label: 'Gallerie',
           routeName: 'Folders',
-          icon: 'mdi-notebook',
+          icon: 'mdi-palette',
           loggedIn: false
         }
       ]
