@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Callback from '../views/Callback'
 import Home from '../views/Home.vue'
+import Gallery from '../views/Gallery.vue'
 import NProgress from 'nprogress'
 import store from '../store'
 
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/gallerie',
+    name: 'Gallery',
+    component: Gallery
   },
   {
     path: '/callback',

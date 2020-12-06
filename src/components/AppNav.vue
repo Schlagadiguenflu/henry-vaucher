@@ -121,8 +121,8 @@ export default {
           loggedIn: false
         },
         {
-          label: 'Gallerie',
-          routeName: 'Folders',
+          label: 'Gallerie virtuelle',
+          routeName: 'Gallery',
           icon: 'mdi-palette',
           loggedIn: false
         }
