@@ -11,6 +11,7 @@
     <v-row>
       <v-col>
         <v-img
+          :lazy-src="require(`@/assets/paintings/giphy.gif`)"
           :src="require(`@/assets/paintings/` + picture.file + `.jpg`)"
           contain
           :maxHeight="height"

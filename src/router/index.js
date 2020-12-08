@@ -17,9 +17,33 @@ const routes = [
     component: Home
   },
   {
-    path: '/gallerie',
+    path: '/gallerie/:pageNumber/:pageSize',
     name: 'Gallery',
-    component: Gallery
+    component: Gallery,
+    props: true,
+    beforeEnter(routeTo, routeFrom, next) {
+      let payload = {
+        pageNumber: routeTo.params.pageNumber,
+        pageSize: routeTo.params.pageSize
+      }
+      console.log(payload)
+      store
+        .dispatch('picture/fetchPictures', payload)
+        .then(pictures => {
+          if (pictures == undefined) {
+            next({ name: '404', params: { resource: 'peintures' } })
+          }
+          routeTo.params.payload = payload
+          next()
+        })
+        .catch(error => {
+          if (error.response && error.response.status == 404) {
+            next({ name: '404', params: { resource: 'peintures' } })
+          } else {
+            next(routeFrom)
+          }
+        })
+    }
   },
   {
     path: '/peinture/details/:id',

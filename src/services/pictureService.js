@@ -12,8 +12,10 @@ const API_URL = process.env.VUE_APP_API_URL
 const CONTROLLER = '/api/pictures'
 
 export default {
-  getPictures() {
-    return axios.get(API_URL + CONTROLLER)
+  getPictures(pageNumber, pageSize) {
+    return axios.get(
+      API_URL + `${CONTROLLER}?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    )
   },
   getPicture(id) {
     return axios.get(API_URL + `${CONTROLLER}/${id}`)

@@ -12,12 +12,14 @@ export const namespaced = true
 
 export const state = {
   pictures: [],
+  pagination: {},
   picture: {}
 }
 
 export const mutations = {
-  SET_PICTURES(state, pictures) {
-    state.pictures = pictures
+  SET_PICTURES(state, response) {
+    state.pictures = response.data
+    state.pagination = JSON.parse(response.headers['x-pagination'])
   },
   SET_PICTURE(state, picture) {
     state.picture = picture
@@ -38,10 +40,10 @@ export const mutations = {
 
 export const actions = {
   // Récupère les peintures et notifie l'utilisateur en cas de succès ou erreur
-  fetchPictures({ commit, dispatch }) {
-    return PictureService.getPictures()
+  fetchPictures({ commit, dispatch }, payload) {
+    return PictureService.getPictures(payload.pageNumber, payload.pageSize)
       .then(response => {
-        commit('SET_PICTURES', response.data)
+        commit('SET_PICTURES', response)
       })
       .catch(error => {
         const notification = {
