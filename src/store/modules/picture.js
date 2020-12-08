@@ -137,5 +137,35 @@ export const actions = {
         dispatch('notification/add', notification, { root: true })
         throw error
       })
+  },
+  // Récupère la peinture précédente et notifie l'utilisateur en cas de succès ou erreur
+  fetchPicturePrevious({ commit, dispatch }, id) {
+    return PictureService.getPicturePrevious(id)
+      .then(response => {
+        commit('SET_PICTURE', response.data)
+        return response.data
+      })
+      .catch(error => {
+        const notification = {
+          type: 'error',
+          message: 'Il y un problème pour charger une peinture ' + error.message
+        }
+        dispatch('notification/add', notification, { root: true })
+      })
+  },
+  // Récupère la prochaine peinture et notifie l'utilisateur en cas de succès ou erreur
+  fetchPictureNext({ commit, dispatch }, id) {
+    return PictureService.getPictureNext(id)
+      .then(response => {
+        commit('SET_PICTURE', response.data)
+        return response.data
+      })
+      .catch(error => {
+        const notification = {
+          type: 'error',
+          message: 'Il y un problème pour charger une peinture ' + error.message
+        }
+        dispatch('notification/add', notification, { root: true })
+      })
   }
 }

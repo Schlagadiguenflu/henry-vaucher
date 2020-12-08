@@ -26,5 +26,11 @@ export default {
   },
   deletePicture(pictureId) {
     return axios.delete(API_URL + `${CONTROLLER}/${pictureId}`)
+  },
+  getPicturePrevious(id) {
+    return axios.get(API_URL + `${CONTROLLER}/previous/${id}`)
+  },
+  getPictureNext(id) {
+    return axios.get(API_URL + `${CONTROLLER}/next/${id}`)
   }
 }

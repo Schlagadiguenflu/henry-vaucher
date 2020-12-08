@@ -173,6 +173,7 @@ import Picture from '@/components/Picture.vue'
 
 // @ is an alias to /src
 export default {
+  title: 'Henri Vaucher',
   components: {
     Picture
   },
@@ -181,7 +182,7 @@ export default {
     return {
       name: 'Henri Vaucher',
       author: 'Henri Vaucher',
-      pictureIds: [2, 3],
+      pictureIds: [53, 45],
       pictures: []
     }
   },

@@ -11,9 +11,10 @@
     <v-row>
       <v-col>
         <v-img
-          :src="'data:image/jpeg;base64,' + picture.file"
+          :src="require(`@/assets/paintings/` + picture.file + `.jpg`)"
           contain
-          :maxHeight="350"
+          :maxHeight="height"
+          @click.stop="goToPictureDetails()"
         >
         </v-img>
         <v-row class="text-center">
@@ -39,9 +40,20 @@ export default {
     picture: {
       type: Object,
       required: true
+    },
+    height: {
+      type: Number,
+      default: 350
     }
   },
   data: () => ({}),
-  methods: {}
+  methods: {
+    goToPictureDetails() {
+      this.$router.push({
+        name: 'Picture-Details',
+        params: { id: this.picture.pictureId }
+      })
+    }
+  }
 }
 </script>
