@@ -16,7 +16,7 @@
         order-md="1"
         class="d-flex align-content-center flex-wrap justify-center"
       >
-        <v-icon x-large @click.stop="previousPicture(picture.pictureId)"
+        <v-icon x-large @click.stop="previousPicture(picture.picture.pictureId)"
           >mdi-arrow-left</v-icon
         >
       </v-col>
@@ -27,7 +27,7 @@
         order-md="2"
         class="d-flex align-content-center flex-wrap"
       >
-        <Picture :picture="picture" :height="650" />
+        <Picture :picture="picture.picture" :height="650" />
       </v-col>
       <v-col
         cols="6"
@@ -36,7 +36,7 @@
         order-md="3"
         class="d-flex align-content-center flex-wrap justify-center"
       >
-        <v-icon x-large @click.stop="nextPicture(picture.pictureId)"
+        <v-icon x-large @click.stop="nextPicture(picture.picture.pictureId)"
           >mdi-arrow-right</v-icon
         >
       </v-col>
@@ -46,18 +46,28 @@
 
 <script>
 import store from '@/store/index.js'
+import { mapState } from 'vuex'
 import Picture from '@/components/Picture.vue'
 
-// @ is an alias to /src
+function loadData(routeTo, routeFrom, next) {
+  store.dispatch('picture/fetchPicture', routeTo.params.id).then(() => {
+    next()
+  })
+}
+
 export default {
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    loadData(routeTo, routeFrom, next)
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    loadData(routeTo, routeFrom, next)
+  },
+
   components: {
     Picture
   },
-  props: {
-    picture: {
-      type: Object,
-      required: true
-    }
+  computed: {
+    ...mapState(['picture'])
   },
   methods: {
     previousPicture(id) {

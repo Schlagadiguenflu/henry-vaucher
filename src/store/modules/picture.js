@@ -44,6 +44,7 @@ export const actions = {
     return PictureService.getPictures(payload.pageNumber, payload.pageSize)
       .then(response => {
         commit('SET_PICTURES', response)
+        return response
       })
       .catch(error => {
         const notification = {

@@ -20,13 +20,11 @@ const routes = [
     path: '/gallerie/:pageNumber/:pageSize',
     name: 'Gallery',
     component: Gallery,
-    props: true,
     beforeEnter(routeTo, routeFrom, next) {
       let payload = {
         pageNumber: routeTo.params.pageNumber,
         pageSize: routeTo.params.pageSize
       }
-      console.log(payload)
       store
         .dispatch('picture/fetchPictures', payload)
         .then(pictures => {
@@ -49,7 +47,6 @@ const routes = [
     path: '/peinture/details/:id',
     name: 'Picture-Details',
     component: PictureDetails,
-    props: true,
     beforeEnter(routeTo, routeFrom, next) {
       store
         .dispatch('picture/fetchPicture', routeTo.params.id)

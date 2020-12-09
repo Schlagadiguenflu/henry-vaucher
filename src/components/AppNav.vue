@@ -21,7 +21,7 @@
           v-for="link in getMenus"
           :key="link.label"
           link
-          :to="{ name: link.routeName }"
+          :to="{ name: link.routeName, params: link.params }"
           exact
         >
           <v-list-item-icon>
@@ -45,10 +45,13 @@
             </v-list-item-title>
           </template>
           <v-list-item
-            v-for="configurationLink in configurationLinks"
+            v-for="configurationLink in getMenus"
             :key="configurationLink.label"
             configurationLink
-            :to="{ name: configurationLink.routeName }"
+            :to="{
+              name: configurationLink.routeName,
+              params: configurationLink.params
+            }"
           >
             <v-list-item-icon>
               <v-icon></v-icon>
@@ -74,7 +77,7 @@
             text
             rounded
             class="my-2"
-            :to="{ name: link.routeName }"
+            :to="{ name: link.routeName, params: link.params }"
             exact
           >
             {{ link.label }}
@@ -123,6 +126,10 @@ export default {
         {
           label: 'Gallerie virtuelle',
           routeName: 'Gallery',
+          params: {
+            pageNumber: 1,
+            pageSize: 6
+          },
           icon: 'mdi-palette',
           loggedIn: false
         }

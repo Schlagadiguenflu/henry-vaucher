@@ -47,31 +47,17 @@ import store from '@/store/index.js'
 import { mapState } from 'vuex'
 import Picture from '@/components/Picture.vue'
 
-function getPictures(routeTo, next) {
-  let payload = { pageNumber: 1, pageSize: 6 }
+function loadData(routeTo, routeFrom, next) {
+  let payload = {
+    pageNumber: routeTo.params.pageNumber,
+    pageSize: routeTo.params.pageSize
+  }
   store.dispatch('picture/fetchPictures', payload).then(() => {
     next()
   })
 }
 
-// Si un filtre existe l'appliquer, permet de ne pas relectionner
-// le filtre à chaque chargement de la liste des entreprises
-function loadData(routeTo, routeFrom, next) {
-  getPictures(routeTo, next)
-}
-
 export default {
-  props: {
-    payload: {
-      type: Object,
-      required: true
-    }
-  },
-
-  components: { Picture },
-
-  data: () => ({}),
-
   beforeRouteEnter(routeTo, routeFrom, next) {
     loadData(routeTo, routeFrom, next)
   },
@@ -79,32 +65,50 @@ export default {
     loadData(routeTo, routeFrom, next)
   },
 
+  components: { Picture },
+
+  data: () => ({ payload: { pageNumber: 0, pageSize: 6 } }),
+
   computed: {
     ...mapState(['picture'])
   },
 
   methods: {
     previousPage() {
-      let payload = { pageNumber: 0, pageSize: 6 }
       let currentPage = this.picture.pagination.CurrentPage
       if (currentPage <= 1) {
         currentPage = this.picture.pagination.TotalPages
       } else {
         currentPage -= 1
       }
-      payload.pageNumber = currentPage
-      store.dispatch('picture/fetchPictures', payload).then(() => {})
+      this.payload.pageNumber = currentPage
+      store.dispatch('picture/fetchPictures', this.payload).then(() => {
+        this.$router.push({
+          name: 'Gallery',
+          params: {
+            pageNumber: this.payload.pageNumber,
+            pageSize: this.payload.pageSize
+          }
+        })
+      })
     },
     nextPage() {
-      let payload = { pageNumber: 0, pageSize: 6 }
       let currentPage = this.picture.pagination.CurrentPage
       if (currentPage >= this.picture.pagination.TotalPages) {
         currentPage = 1
       } else {
         currentPage += 1
       }
-      payload.pageNumber = currentPage
-      store.dispatch('picture/fetchPictures', payload).then(() => {})
+      this.payload.pageNumber = currentPage
+      store.dispatch('picture/fetchPictures', this.payload).then(() => {
+        this.$router.push({
+          name: 'Gallery',
+          params: {
+            pageNumber: this.payload.pageNumber,
+            pageSize: this.payload.pageSize
+          }
+        })
+      })
     }
   }
 }

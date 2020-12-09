@@ -41,7 +41,17 @@
                     >
                       En savoir plus
                     </v-btn>
-                    <v-btn depressed color="primary" :to="{ name: 'Gallery' }">
+                    <v-btn
+                      depressed
+                      color="primary"
+                      :to="{
+                        name: 'Gallery',
+                        params: {
+                          pageNumber: 1,
+                          pageSize: 6
+                        }
+                      }"
+                    >
                       Gallerie virtuelle
                     </v-btn>
                   </v-col>
