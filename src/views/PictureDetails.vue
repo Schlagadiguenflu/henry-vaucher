@@ -56,6 +56,28 @@ function loadData(routeTo, routeFrom, next) {
 }
 
 export default {
+  name: 'Peinture',
+  metaInfo() {
+    return {
+      title: `${this.picture.picture.title} - Henri Vaucher`,
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+          name: 'description',
+          content: "Visitez la galerie virtuelle d'Henri Vaucher"
+        },
+        {
+          property: 'og:title',
+          content: `${this.picture.picture.title} - Henri Vaucher`
+        },
+        { property: 'og:site_name', content: 'Henry Vaucher' },
+        { property: 'og:type', content: 'website' },
+        { name: 'robots', content: 'index,follow' }
+      ]
+    }
+  },
+
   beforeRouteEnter(routeTo, routeFrom, next) {
     loadData(routeTo, routeFrom, next)
   },

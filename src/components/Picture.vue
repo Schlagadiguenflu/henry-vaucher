@@ -12,7 +12,8 @@
       <v-col>
         <v-img
           :lazy-src="require(`@/assets/paintings/giphy.gif`)"
-          :src="require(`@/assets/paintings/` + picture.file + `.jpg`)"
+          :src="require(`@/assets/paintings/` + picture.file)"
+          :alt="picture.title"
           contain
           :maxHeight="height"
           @click.stop="goToPictureDetails()"
@@ -20,12 +21,12 @@
         </v-img>
         <v-row class="text-center">
           <v-col cols="12">
-            <h3 class="title font-weight-bold mb-2" text-color="white">
+            <h3 class="title font-weight-light mb-2" text-color="white">
               {{ picture.title }}
             </h3>
-            <div class="caption mb-2">{{ picture.date }}</div>
-            <div class="caption">{{ picture.support }}</div>
-            <div class="caption">
+            <div class="subtitle-1 mb-2">{{ picture.date }}</div>
+            <div class="subtitle-1">{{ picture.support }}</div>
+            <div class="subtitle-1">
               {{ picture.height }} cm x {{ picture.width }} cm
             </div>
           </v-col>

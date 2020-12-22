@@ -2,13 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Callback from '../views/Callback'
 import Home from '../views/Home.vue'
+import About from '../views/About.vue'
 import Gallery from '../views/Gallery.vue'
 import PictureDetails from '../views/PictureDetails.vue'
 import NotFound from '../views/NotFound.vue'
 import NProgress from 'nprogress'
 import store from '../store'
+import Meta from 'vue-meta'
 
 Vue.use(VueRouter)
+Vue.use(Meta)
 
 const routes = [
   {
@@ -17,7 +20,12 @@ const routes = [
     component: Home
   },
   {
-    path: '/gallerie/:pageNumber/:pageSize',
+    path: '/apropos',
+    name: 'About',
+    component: About
+  },
+  {
+    path: '/galerie/:pageNumber/:pageSize',
     name: 'Gallery',
     component: Gallery,
     beforeEnter(routeTo, routeFrom, next) {
@@ -86,7 +94,14 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 // Vérification de connexion de l'utilisateur, utile surtout si l'utilisateur rafraichit la page

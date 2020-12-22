@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col
-        cols="6"
-        class="d-flex align-content-center flex-wrap justify-center"
-      >
-        <v-icon x-large @click.stop="previousPage()">mdi-arrow-left</v-icon>
-      </v-col>
-      <v-col
-        cols="6"
-        class="d-flex align-content-center flex-wrap justify-center"
-      >
-        <v-icon x-large @click.stop="nextPage()">mdi-arrow-right</v-icon>
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-container class="max-width">
+          <v-pagination
+            v-model="currentPage"
+            class="my-4"
+            :length="picture.pagination.TotalPages"
+            @input="inputPage()"
+            @previous="previousPage()"
+            @next="nextPage()"
+          ></v-pagination>
+        </v-container>
       </v-col>
     </v-row>
     <v-row>
@@ -25,18 +25,18 @@
         <Picture :picture="picture" />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col
-        cols="6"
-        class="d-flex align-content-center flex-wrap justify-center"
-      >
-        <v-icon x-large @click.stop="previousPage()">mdi-arrow-left</v-icon>
-      </v-col>
-      <v-col
-        cols="6"
-        class="d-flex align-content-center flex-wrap justify-center"
-      >
-        <v-icon x-large @click.stop="nextPage()">mdi-arrow-right</v-icon>
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-container class="max-width">
+          <v-pagination
+            v-model="currentPage"
+            class="my-4"
+            :length="picture.pagination.TotalPages"
+            @input="inputPage()"
+            @previous="previousPage()"
+            @next="nextPage()"
+          ></v-pagination>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -58,6 +58,26 @@ function loadData(routeTo, routeFrom, next) {
 }
 
 export default {
+  name: 'Galerie',
+  metaInfo: {
+    title: 'Galerie',
+    // override the parent template and just use the above title only
+    titleTemplate: null,
+    meta: [
+      {
+        name: 'description',
+        content: "Visitez la galerie virtuelle d'Henri Vaucher"
+      },
+      {
+        property: 'og:title',
+        content: 'Galerie virtuelle'
+      },
+      { property: 'og:site_name', content: 'Henry Vaucher' },
+      { property: 'og:type', content: 'website' },
+      { name: 'robots', content: 'index,follow' }
+    ]
+  },
+
   beforeRouteEnter(routeTo, routeFrom, next) {
     loadData(routeTo, routeFrom, next)
   },
@@ -67,21 +87,33 @@ export default {
 
   components: { Picture },
 
-  data: () => ({ payload: { pageNumber: 0, pageSize: 6 } }),
+  data: () => ({ payload: { pageNumber: 0, pageSize: 6 }, currentPage: 1 }),
 
   computed: {
     ...mapState(['picture'])
   },
 
   methods: {
+    inputPage() {
+      this.payload.pageNumber = this.currentPage
+      store.dispatch('picture/fetchPictures', this.payload).then(() => {
+        this.$router.push({
+          name: 'Gallery',
+          params: {
+            pageNumber: this.payload.pageNumber,
+            pageSize: this.payload.pageSize
+          }
+        })
+      })
+    },
     previousPage() {
-      let currentPage = this.picture.pagination.CurrentPage
-      if (currentPage <= 1) {
-        currentPage = this.picture.pagination.TotalPages
+      this.currentPage = this.picture.pagination.CurrentPage
+      if (this.currentPage <= 1) {
+        this.currentPage = this.picture.pagination.TotalPages
       } else {
-        currentPage -= 1
+        this.currentPage -= 1
       }
-      this.payload.pageNumber = currentPage
+      this.payload.pageNumber = this.currentPage
       store.dispatch('picture/fetchPictures', this.payload).then(() => {
         this.$router.push({
           name: 'Gallery',
@@ -93,13 +125,13 @@ export default {
       })
     },
     nextPage() {
-      let currentPage = this.picture.pagination.CurrentPage
-      if (currentPage >= this.picture.pagination.TotalPages) {
-        currentPage = 1
+      this.currentPage = this.picture.pagination.CurrentPage
+      if (this.currentPage >= this.picture.pagination.TotalPages) {
+        this.currentPage = 1
       } else {
-        currentPage += 1
+        this.currentPage += 1
       }
-      this.payload.pageNumber = currentPage
+      this.payload.pageNumber = this.currentPage
       store.dispatch('picture/fetchPictures', this.payload).then(() => {
         this.$router.push({
           name: 'Gallery',

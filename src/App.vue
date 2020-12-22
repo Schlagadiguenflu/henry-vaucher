@@ -238,4 +238,10 @@ export default {
 tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.02);
 }
+
+/* No decoration on anchor and u tags*/
+a,
+u {
+  text-decoration: none;
+}
 </style>

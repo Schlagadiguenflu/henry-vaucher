@@ -34,5 +34,8 @@ export default {
   },
   getPictureNext(id) {
     return axios.get(API_URL + `${CONTROLLER}/next/${id}`)
+  },
+  getPicturesRandom(number) {
+    return axios.get(API_URL + `${CONTROLLER}/random/${number}`)
   }
 }

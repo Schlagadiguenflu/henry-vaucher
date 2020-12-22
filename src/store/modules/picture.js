@@ -35,6 +35,9 @@ export const mutations = {
   },
   DELETE_PICTURE(state) {
     state.picture = null
+  },
+  SET_PICTURESRANDOM(state, response) {
+    state.pictures = response
   }
 }
 
@@ -167,6 +170,21 @@ export const actions = {
         const notification = {
           type: 'error',
           message: 'Il y un problème pour charger une peinture ' + error.message
+        }
+        dispatch('notification/add', notification, { root: true })
+      })
+  },
+  // Récupère x peintures aléatoires
+  fetchPicturesRandom({ commit, dispatch }, number) {
+    return PictureService.getPicturesRandom(number)
+      .then(response => {
+        commit('SET_PICTURESRANDOM', response.data)
+        return response.data
+      })
+      .catch(error => {
+        const notification = {
+          type: 'error',
+          message: 'Problème au chargement des pictures : ' + error.message
         }
         dispatch('notification/add', notification, { root: true })
       })

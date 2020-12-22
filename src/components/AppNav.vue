@@ -65,7 +65,10 @@
     </v-navigation-drawer>
     <v-container class="mx-auto py-0">
       <v-app-bar app elevate-on-scroll color="primary" dark>
-        <v-toolbar-title class="text-uppercase ml-md-5">
+        <v-toolbar-title
+          class="text-uppercase ml-md-5"
+          @click.stop="$router.push({ name: 'Home' })"
+        >
           {{ name }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -118,13 +121,19 @@ export default {
       // folderLoaded means does folder need to be loaded ?
       links: [
         {
-          label: 'Le peintre',
+          label: 'Accueil',
           routeName: 'Home',
+          icon: 'mdi-home',
+          loggedIn: false
+        },
+        {
+          label: 'A propos',
+          routeName: 'About',
           icon: 'mdi-brush',
           loggedIn: false
         },
         {
-          label: 'Gallerie virtuelle',
+          label: 'Galerie virtuelle',
           routeName: 'Gallery',
           params: {
             pageNumber: 1,
