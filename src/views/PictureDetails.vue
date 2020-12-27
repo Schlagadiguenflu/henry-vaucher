@@ -9,6 +9,12 @@
 <template>
   <v-container>
     <v-row>
+      <v-col class="d-flex align-content-center flex-wrap justify-center">
+        <v-btn v-if="!picture.diaporama" @click="setDiaporama()">Démarrer le diaporama</v-btn>
+        <v-btn v-else @click="setDiaporama()">Arrêter le diaporama</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col
         cols="6"
         md="1"
@@ -27,7 +33,7 @@
         order-md="2"
         class="d-flex align-content-center flex-wrap"
       >
-        <Picture :picture="picture.picture" :height="650" />
+        <Picture :picture="picture.picture" :height="getHeightScreen()" />
       </v-col>
       <v-col
         cols="6"
@@ -74,7 +80,8 @@ export default {
         { property: 'og:site_name', content: 'Henry Vaucher' },
         { property: 'og:type', content: 'website' },
         { name: 'robots', content: 'index,follow' }
-      ]
+      ],
+      diaporama: false
     }
   },
 
@@ -90,6 +97,12 @@ export default {
   },
   computed: {
     ...mapState(['picture'])
+  },
+  mounted() {
+    setTimeout(() => { if (this.picture.diaporama){
+        this.nextPicture(this.picture.picture.pictureId)
+    } }, 5000)
+    
   },
   methods: {
     previousPicture(id) {
@@ -107,6 +120,17 @@ export default {
           params: { id: response.pictureId, picture: response }
         })
       })
+    },
+    getHeightScreen(){
+      return window.screen.height - 300
+    },
+    setDiaporama(){
+      store.dispatch('picture/setDiaporama', !this.picture.diaporama).then(() => {
+              setTimeout(() => { if (this.picture.diaporama){
+        this.nextPicture(this.picture.picture.pictureId)
+    } }, 5000)
+      })
+
     }
   }
 }

@@ -13,7 +13,8 @@ export const namespaced = true
 export const state = {
   pictures: [],
   pagination: {},
-  picture: {}
+  picture: {},
+  diaporama: false
 }
 
 export const mutations = {
@@ -38,6 +39,9 @@ export const mutations = {
   },
   SET_PICTURESRANDOM(state, response) {
     state.pictures = response
+  },
+  SET_DIAPORAMA(state, etat) {
+    state.diaporama = etat
   }
 }
 
@@ -188,5 +192,9 @@ export const actions = {
         }
         dispatch('notification/add', notification, { root: true })
       })
+  },
+  // Change l'état du diaporama
+  setDiaporama({ commit }, etat) {
+    commit('SET_DIAPORAMA', etat)
   }
 }

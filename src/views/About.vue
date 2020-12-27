@@ -127,7 +127,7 @@ function loadData(routeTo, routeFrom, next) {
 }
 
 export default {
-  name: 'A propos',
+  name: 'A_propos',
   metaInfo: {
     // title will be injected into parent titleTemplate
     title: 'A propos',
