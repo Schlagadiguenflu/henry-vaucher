@@ -10,8 +10,16 @@
   <v-container>
     <v-row>
       <v-col class="d-flex align-content-center flex-wrap justify-center">
-        <v-btn v-if="!picture.diaporama" @click="setDiaporama()">Démarrer le diaporama</v-btn>
-        <v-btn v-else @click="setDiaporama()">Arrêter le diaporama</v-btn>
+        <v-btn
+          depressed
+          color="primary"
+          v-if="!picture.diaporama"
+          @click="setDiaporama()"
+          >Démarrer le diaporama</v-btn
+        >
+        <v-btn depressed color="primary" v-else @click="setDiaporama()"
+          >Arrêter le diaporama</v-btn
+        >
       </v-col>
     </v-row>
     <v-row>
@@ -81,7 +89,7 @@ export default {
         { property: 'og:type', content: 'website' },
         { name: 'robots', content: 'index,follow' }
       ],
-      diaporama: false
+      diaporama: null
     }
   },
 
@@ -98,12 +106,9 @@ export default {
   computed: {
     ...mapState(['picture'])
   },
-  updated() {
-    if (this.picture.diaporama){
-      setTimeout(() => { 
-        this.nextPicture(this.picture.picture.pictureId)
-      }, 5000)
-    }   
+  beforeDestroy() {
+    this.diaporamaOff()
+    this.setDiaporama()
   },
   methods: {
     previousPicture(id) {
@@ -122,13 +127,31 @@ export default {
         })
       })
     },
-    getHeightScreen(){
-      return window.screen.height - 300
+    diaporamaOn() {
+      this.diaporama = setInterval(() => {
+        store
+          .dispatch('picture/fetchPictureNext', this.picture.picture.pictureId)
+          .then(() => {})
+      }, 10000)
     },
-    setDiaporama(){
-      store.dispatch('picture/setDiaporama', !this.picture.diaporama).then(() => {
-        this.nextPicture(this.picture.picture.pictureId)   
-      })
+    diaporamaOff() {
+      clearInterval(this.diaporama)
+    },
+    setDiaporama() {
+      store
+        .dispatch('picture/setDiaporama', !this.picture.diaporama)
+        .then(() => {
+          if (this.picture.diaporama) {
+            this.diaporamaOff()
+            this.diaporamaOn()
+          } else {
+            this.diaporamaOff()
+          }
+        })
+    },
+    getHeightScreen() {
+      console.log(window.screen.height * 0.5)
+      return window.screen.height * 0.5
     }
   }
 }
