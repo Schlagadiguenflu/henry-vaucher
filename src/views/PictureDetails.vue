@@ -98,11 +98,12 @@ export default {
   computed: {
     ...mapState(['picture'])
   },
-  mounted() {
-    setTimeout(() => { if (this.picture.diaporama){
+  updated() {
+    if (this.picture.diaporama){
+      setTimeout(() => { 
         this.nextPicture(this.picture.picture.pictureId)
-    } }, 5000)
-    
+      }, 5000)
+    }   
   },
   methods: {
     previousPicture(id) {
@@ -126,11 +127,8 @@ export default {
     },
     setDiaporama(){
       store.dispatch('picture/setDiaporama', !this.picture.diaporama).then(() => {
-              setTimeout(() => { if (this.picture.diaporama){
-        this.nextPicture(this.picture.picture.pictureId)
-    } }, 5000)
+        this.nextPicture(this.picture.picture.pictureId)   
       })
-
     }
   }
 }
