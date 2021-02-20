@@ -99,6 +99,9 @@ export default {
   beforeRouteUpdate(routeTo, routeFrom, next) {
     loadData(routeTo, routeFrom, next)
   },
+  beforeMount() {
+    window.addEventListener('keydown', this.handleKeydown, null)
+  },
 
   components: {
     Picture
@@ -109,6 +112,7 @@ export default {
   beforeDestroy() {
     this.diaporamaOff()
     this.setDiaporama()
+    window.removeEventListener('keydown', this.handleKeydown)
   },
   methods: {
     previousPicture(id) {
@@ -150,8 +154,17 @@ export default {
         })
     },
     getHeightScreen() {
-      console.log(window.screen.height * 0.5)
       return window.screen.height * 0.5
+    },
+    handleKeydown(e) {
+      switch (e.keyCode) {
+        case 37:
+          this.previousPicture(this.picture.picture.pictureId)
+          break
+        case 39:
+          this.nextPicture(this.picture.picture.pictureId)
+          break
+      }
     }
   }
 }

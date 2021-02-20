@@ -10,6 +10,7 @@
             @input="inputPage()"
             @previous="previousPage()"
             @next="nextPage()"
+            @keyup.right="nextPage()"
           ></v-pagination>
         </v-container>
       </v-col>
@@ -84,6 +85,12 @@ export default {
   beforeRouteUpdate(routeTo, routeFrom, next) {
     loadData(routeTo, routeFrom, next)
   },
+  beforeMount() {
+    window.addEventListener('keydown', this.handleKeydown, null)
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.handleKeydown)
+  },
 
   components: { Picture },
 
@@ -141,6 +148,16 @@ export default {
           }
         })
       })
+    },
+    handleKeydown(e) {
+      switch (e.keyCode) {
+        case 37:
+          this.previousPage()
+          break
+        case 39:
+          this.nextPage()
+          break
+      }
     }
   }
 }

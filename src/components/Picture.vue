@@ -26,7 +26,10 @@
             </h3>
             <div class="subtitle-1 mb-2">{{ picture.date }}</div>
             <div class="subtitle-1">{{ picture.support }}</div>
-            <div class="subtitle-1">
+            <div
+              class="subtitle-1"
+              v-if="picture.height != null && picture.width != null"
+            >
               {{ picture.height }} cm x {{ picture.width }} cm
             </div>
           </v-col>
