@@ -9,62 +9,58 @@
 <template>
   <div>
     <section>
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <slot />
-          </v-col>
-
-          <v-col cols="12">
-            <v-card color="grey lighten-1" dark href="#!">
-              <v-img
-                :src="require(`@/assets/paintings/h-vaucher-50-64cm-1921.jpg`)"
-                :maxHeight="600"
-                :position="'bottom, bottom'"
-                gradient="rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)"
+      <v-row no-gutters>
+        <v-img
+          :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
+          :src="require(`@/assets/paintings/h-vaucher-50-64cm-1921.jpg`)"
+          :maxHeight="400"
+          :position="'bottom, bottom'"
+          gradient="rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)"
+        >
+          <v-theme-provider dark>
+            <v-container fill-height>
+              <v-row
+                align="center"
+                class="white--text mx-auto"
+                justify="center"
               >
-                <v-row
-                  class="fill-height pa-3 text-md-left text-center"
-                  align="center"
+                <v-col class="white--text text-center" cols="12" tag="h1">
+                  <span
+                    :class="[
+                      $vuetify.breakpoint.smAndDown ? 'display-2' : 'display-3'
+                    ]"
+                    class="font-weight-black"
+                  >
+                    HENRI VAUCHER
+                  </span>
+
+                  <br />
+
+                  <span
+                    :class="[
+                      $vuetify.breakpoint.smAndDown ? 'display-0' : 'display-1'
+                    ]"
+                    class="font-weight-light"
+                  >
+                    SES PEINTURES ET SON HISTOIRE
+                  </span>
+                </v-col>
+
+                <v-btn
+                  class="align-self-end"
+                  fab
+                  outlined
+                  @click="$vuetify.goTo('#about-me')"
                 >
-                  <v-col cols="12" md="7" offset-md="5">
-                    <h1 class="display-3 font-weight-light">
-                      Henri Vaucher
-                    </h1>
-
-                    <div class="subheading text-uppercase pl-1 mb-4">
-                      Ses peintures et son histoire
-                    </div>
-
-                    <v-btn
-                      depressed
-                      light
-                      class="mr-2"
-                      @click="$vuetify.goTo('#about-me')"
-                    >
-                      En savoir plus
-                    </v-btn>
-                    <v-btn
-                      depressed
-                      color="primary"
-                      :to="{
-                        name: 'Gallery',
-                        params: {
-                          pageNumber: 1,
-                          pageSize: 6
-                        }
-                      }"
-                    >
-                      Galerie virtuelle
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-img>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+                  <v-icon>mdi-chevron-double-down</v-icon>
+                </v-btn>
+              </v-row>
+            </v-container>
+          </v-theme-provider>
+        </v-img>
+      </v-row>
     </section>
+
     <section id="about-me">
       <v-container>
         <v-row class="text-md-left text-center" align="center" justify="center">

@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row class="text-md-left text-center mt-7">
-        <v-col cols="12" lg="4">
+        <v-col cols="12" lg="7" class="pa-md-16">
           <h1 class="display-3 mb-2">Galerie virtuelle</h1>
           <p class="title font-weight-light text-justify">
             La galerie virtuelle que nous vous proposons vous permettra de vous
@@ -37,16 +37,29 @@
             joindre à la Galerie Henri Vaucher.
           </p>
         </v-col>
-        <v-col cols="12" lg="3">
-          <v-col
-            v-for="(picture, i) in picture.pictures"
-            :key="i"
-            class="d-flex align-content-space-around flex-wrap"
-          >
-            <Picture :picture="picture" />
+        <v-col cols="12" lg="5" class="pa-md-16">
+          <v-col>
+            <Picture
+              :picture="picture.pictures[0]"
+              v-if="picture.pictures.length > 0"
+            />
           </v-col>
         </v-col>
-        <v-col cols="12" lg="5">
+        <v-col cols="12" lg="5" class="pa-md-16">
+          <v-col>
+            <Picture
+              :picture="picture.pictures[1]"
+              v-if="picture.pictures.length > 1"
+            />
+          </v-col>
+          <v-col>
+            <Picture
+              :picture="picture.pictures[2]"
+              v-if="picture.pictures.length > 2"
+            />
+          </v-col>
+        </v-col>
+        <v-col cols="12" lg="7" class="pa-md-16">
           <h1 class="display-3 mb-2">Biographie (1886-1953)</h1>
           <p class="title font-weight-light text-justify">
             Henri Vaucher naît en 1886. Il est le fils d’Elisa et de Cyrille
