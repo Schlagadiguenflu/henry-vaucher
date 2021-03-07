@@ -9,11 +9,12 @@
 <template>
   <v-footer color="primary" padless>
     <v-row justify="center" no-gutters>
-      <v-col cols="12" md="4"> </v-col>
+      <v-col class="lighten-2 py-4 text-left white--text pl-9" cols="12" md="4">
+        © {{ new Date().getFullYear() }} — <strong>{{ name }}</strong></v-col
+      >
       <v-col class="lighten-2 py-4 text-center white--text" cols="12" md="4">
-        © {{ new Date().getFullYear() }} — <strong>{{ name }}</strong>
       </v-col>
-      <v-col class="primary py-4 text-center white--text" cols="12" md="4">
+      <v-col class="primary py-4 text-right white--text pr-12" cols="12" md="4">
         fait avec <v-icon color="white">mdi-cards-heart</v-icon> par
         <a
           class="white--text"
